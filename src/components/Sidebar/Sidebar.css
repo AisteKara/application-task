@@ -1,0 +1,17 @@
+.menuItem {
+    text-decoration: none;
+     color: white;
+}
+.menuList {
+    padding: 50px 20px;
+}
+.sidebar {
+    background-color: black;
+    width: 15vw;
+    flex-shrink: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px white solid;
+}
