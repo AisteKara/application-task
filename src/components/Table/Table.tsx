@@ -11,8 +11,8 @@ const Table:React.FC<Props> = (props: Props) => {
     const {selectedFilm, people } = props
   return (
     <>
-      <h2>{locale.PEOPLE_IN} {selectedFilm.title}</h2>
       <div className="peopleContainer">
+      <h2>{locale.PEOPLE_IN} {selectedFilm.title}</h2>
         <table className="charactersTable">
           <tbody>
             <tr className="sticky">

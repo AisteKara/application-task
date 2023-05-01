@@ -1,5 +1,4 @@
-//@ts-ignore
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./Films.css";
 import Table from "../../components/Table/Table";
