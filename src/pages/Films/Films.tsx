@@ -1,47 +1,35 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+//@ts-ignore
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "./Films.css";
 import Table from "../../components/Table/Table";
 import FilmsList from "../../components/FilmsList/FilmsList";
-import { Film, Person } from "../../types/Films.types";
+import { Film } from "../../types/Films.types";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import { AppDispatch, RootState } from "../../store/store";
+import { fetchFilms, fetchPeople } from "../../store/filmsSlice";
 
 const Films = () => {
-  const [films, setFilms] = useState<Film[]>([]);
-  const [selectedFilm, setSelectedFilm] = useState<Film | null>(null);
-  const [people, setPeople] = useState<Person[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-
+  const dispatch = useDispatch<AppDispatch>();  
+  const films = useSelector((state: RootState) => state.films.films);
+  const selectedFilm = useSelector((state: RootState) => state.films.selectedFilm);
+  const people = useSelector((state: RootState) => state.films.people);
+  const loading = useSelector((state: RootState) => state.films.loading);
 
   useEffect(() => {
-    const fetchFilms = async () => {
-      const response = await axios.get("https://swapi.dev/api/films");
-      setFilms(response.data.results);
-    };
-    fetchFilms();
-  }, []);
+    dispatch(fetchFilms());
+  }, [dispatch]);
 
-  const handleShowPeople = async (film: Film) => {
-    setLoading(true);
-    setSelectedFilm(film);
-    const characters = film.characters;
-    const promises = characters.map((url: string) => axios.get(url));
-    const responses = await Promise.all(promises);
-    const peopleData = responses.map((response: any) => response.data);
-    setPeople(peopleData);
-    setLoading(false);
+  const handleShowPeople = (film: Film) => {
+    dispatch(fetchPeople(film));
   };
 
   return (
     <div className="StarWarsMovies">
-      <FilmsList films={films} handleShowPeople={handleShowPeople} selectedFilm={selectedFilm} />
-      { loading ?
-      <LoadingSpinner />
-      :(
-      <>
-      {selectedFilm && <Table selectedFilm={selectedFilm} people={people} />}
-      </>
-      )}
+      <FilmsList films={films}
+       handleShowPeople={handleShowPeople} 
+       selectedFilm={selectedFilm} />
+          {loading ? ( <LoadingSpinner /> ) : selectedFilm && <Table selectedFilm={selectedFilm} people={people} />}
     </div>
   );
 };

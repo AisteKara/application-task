@@ -9,7 +9,6 @@ function App() {
     <div
       style={{
         display: "flex",
-        overflow: "scroll"
       }}
     >
       <Sidebar />

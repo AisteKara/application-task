@@ -1,10 +1,11 @@
 import React from "react";
 import { locale } from "../../locale";
 import { Film } from "../../types/Films.types";
+import "./FilmsList.css";
 
 interface Props {
   films: Film[];
-  handleShowPeople: (film: Film) => Promise<void>;
+  handleShowPeople: (film: Film) => void;
   selectedFilm: Film | null;
 }
 
@@ -13,6 +14,7 @@ const FilmsList: React.FC<Props> = ({ films, handleShowPeople, selectedFilm }) =
     <div className="filmsContainer">
       {films.map((film: Film) => (
             <div
+            key={film.episode_id}
             className={`film ${
               selectedFilm && selectedFilm.episode_id === film.episode_id ? "selected" : ""
             }`}
