@@ -14,10 +14,10 @@ const FilmsList: React.FC<Props> = ({ films, handleShowPeople, selectedFilm }) =
     <div className="filmsContainer">
       {films.map((film: Film) => (
             <div
-            key={film.episode_id}
             className={`film ${
               selectedFilm && selectedFilm.episode_id === film.episode_id ? "selected" : ""
             }`}
+            key={film.title}
           >
             <div className="title">{film.title}</div>
             <div className="episodeId">{locale.EPISODE} {film.episode_id}</div>
